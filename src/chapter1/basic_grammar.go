@@ -1,6 +1,8 @@
 package chapter1
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func BasicGrammar() {
 
@@ -76,6 +78,17 @@ func BasicGrammar() {
 	_, b = GetData()
 	fmt.Println(a, b)
 	fmt.Println("--------------------------")
+
+	//整数类型
+	//var e int = 12
+	//var ee uint = -12
+	//
+	////浮点类型
+	//var f  float32 = 2.3
+	//var ff float64 = 2.33
+	//
+	//fmt.Println("%f\n",math.Pi)
+	//fmt.Println("%.2f\n",math.Phi)
 
 }
 
