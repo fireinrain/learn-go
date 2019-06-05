@@ -140,7 +140,21 @@ func BasicGrammar() {
 	Swap(&people1, &people2)
 	fmt.Println(people1, people2)
 
+	//变量声明周期--堆栈，变量逃逸
+
+	fmt.Println("-----------------------")
+	//常量声明 const 关键字
+	const pi = 3.1415
+	const names = "sdsda"
+
+	//类型别名
+	type myfloat float64
+
+	var myint MyInt = 12
+	fmt.Println(myint)
 }
+
+type MyInt int16
 
 func GetData() (int, int) {
 	return 100, 2000
@@ -155,4 +169,9 @@ func Swap(a *int, b *int) {
 
 	*b = temp
 
+}
+
+//类似于重写string方法
+func (Myint MyInt) String() string {
+	return string(Myint) + string("abc")
 }
