@@ -1,7 +1,7 @@
 package main
 
 import (
-	"chapter3"
+	"chapter4"
 )
 
 func main() {
@@ -9,5 +9,6 @@ func main() {
 	//chapter1.RunDrawSinx()
 
 	//chapter2.ContainerCakes()
-	chapter3.ControlTheProcess()
+	//chapter3.ControlTheProcess()
+	chapter4.FunctionPlay()
 }
