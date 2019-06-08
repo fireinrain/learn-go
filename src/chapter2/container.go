@@ -242,6 +242,7 @@ func ContainerCakes() {
 		fmt.Println(i.Value)
 	}
 
+	//遍历链表啊
 	for i := l.Front(); i != nil; i = i.Next() {
 		fmt.Println("value: ", i.Value)
 	}
