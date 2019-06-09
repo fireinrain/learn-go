@@ -1,8 +1,13 @@
 package chapter4
 
 import (
+	"bytes"
+	"errors"
 	"flag"
 	"fmt"
+	"os"
+	"reflect"
+	"regexp"
 	"strings"
 )
 
@@ -149,6 +154,149 @@ func FunctionPlay() {
 
 	// 打印累加器的函数地址
 	fmt.Printf("%p\n", accumulator2)
+
+	fmt.Println("------")
+	//可变参数
+	changedParams("age", "name", "height")
+
+	//获得参数类型
+	fmt.Println(getParamsType(100, "str", true))
+
+	fmt.Println("---------")
+	//延迟执行defer
+	//Go 语言的 defer 语句会将其后面跟随的语句进行延迟处理。
+	// 在 defer 归属的函数即将返回时，将延迟处理的语句按 defer 的逆序进行执行
+	// ，也就是说，先被 defer 的语句最后被执行，最后被 defer 的语句，最先被执行
+	//相当于一个入栈出栈处理
+
+	fmt.Println("defer begin")
+	defer fmt.Println("1")
+	defer fmt.Println("2")
+	defer fmt.Println("3")
+	fmt.Println("defer end")
+
+	fmt.Println("-----")
+
+	//defer
+	fmt.Println(fileSize("F:\\GolandProjects\\learn-go\\sin.png"))
+
+	//错误处理
+
+	//panic 宕机
+	//panic("crash")
+
+	//当 panic() 触发的宕机发生时，panic() 后面的代码将不会被运行，
+	// 但是在 panic() 函数前面已经运行过的 defer 语句依然会在宕机发生时发生作用
+
+	defer fmt.Println("宕机后要做的事情1")
+	defer fmt.Println("宕机后要做的事情2")
+	//panic("宕机")
+
+	//在其他语言里，宕机往往以异常的形式存在。底层抛出异常，上层逻辑通过 try/catch 机制捕获异常，没有被捕获的严重异常会导致宕机，捕获的异常可以被忽略，让代码继续运行。
+	//
+	//Go 没有异常系统，其使用 panic 触发宕机类似于其他语言的抛出异常，那么 recover 的宕机恢复机制就对应 try/catch 机制。
+
+	//recover
+	i := recover()
+	fmt.Println(i)
+}
+
+//panic 测试
+func MustCompile(str string) *regexp.Regexp {
+	compile, e := regexp.Compile(str)
+	if e != nil {
+		panic(`regexp: Compile(` + (str) + `): ` + e.Error())
+	}
+	return compile
+}
+
+// 定义除数为0的错误
+var errDivisionByZero = errors.New("division by zero")
+
+func div(dividend, divisor int) (int, error) {
+	// 判断除数为0的情况并返回
+	if divisor == 0 {
+		return 0, errDivisionByZero
+	}
+	// 正常计算，返回空错误
+	return dividend / divisor, nil
+}
+
+func New(text string) error {
+	return &errorString{text}
+}
+
+type errorString struct {
+	s string
+}
+
+func (e *errorString) Error() string {
+	return e.s
+}
+
+//defer test
+func fileSize(filename string) int64 {
+	file, e := os.Open(filename)
+	if e != nil {
+		return 0
+	}
+
+	defer file.Close()
+
+	info, e := file.Stat()
+	if e != nil {
+		return 0
+	}
+
+	size := info.Size()
+	return size
+}
+
+func getParamsType(paramsList ...interface{}) string {
+	var buffer bytes.Buffer
+
+	//如何获得go中数据的类型
+	//1 switch 但是要搭配空接口
+	//2 反射  也是需要搭配空接口的
+	var name interface{} = "name"
+	switch name.(type) {
+	case string:
+		fmt.Println("name type is: ", "string")
+	}
+
+	fmt.Println("name type is：", reflect.TypeOf(name))
+
+	for _, s := range paramsList {
+		str := fmt.Sprintf("%v", s)
+		var typeString string
+		switch s.(type) {
+		case bool:
+			typeString = "bool"
+		case string:
+			typeString = "string"
+		case int:
+			typeString = "int"
+
+		}
+		buffer.WriteString("value: ")
+		// 写入值
+		buffer.WriteString(str)
+		// 写类型前缀
+		buffer.WriteString(" type: ")
+		// 写类型字符串
+		buffer.WriteString(typeString)
+		// 写入换行符
+		buffer.WriteString("\n")
+	}
+	return buffer.String()
+
+}
+
+//可变参数
+func changedParams(str ...string) {
+	for _, value := range str {
+		fmt.Println(value)
+	}
 }
 
 //闭包的记忆效应
@@ -265,6 +413,10 @@ func testPassByValue() {
 	//所有的 Data 结构的指针地址发生了变化，意味着所有的结构都是一块新的内存，无论是将 Data 结构传入函数内部，还是通过函数返回值传回 Data 都会发生复制行为。
 	//所有的 Data 结构中的成员值都没有发生变化，原样传递，意味着所有参数都是值传递。
 	//Data 结构的 ptr 成员在传递过程中保持一致，表示指针在函数参数值传递中传递的只是指针值，不会复制指针指向的部分。
+
+	//recover
+	i := recover()
+	fmt.Println(i)
 
 }
 
