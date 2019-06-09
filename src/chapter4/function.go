@@ -102,6 +102,62 @@ func FunctionPlay() {
 
 	//实现接口
 
+	//声明接口变量
+	var invoker Invoker
+
+	mystruct := new(Struct)
+	invoker = mystruct
+	invoker.Call("hello")
+
+	invoker = FuncCaller(func(v interface{}) {
+		fmt.Println("from function------", v)
+	})
+
+	invoker.Call("hello")
+
+	//interface{} 表示任意类型
+
+	//闭包
+	//闭包是引用了自由变量的函数，被引用的自由变量和函数一同存在，即使已经离开了自由变量的环境也不会被释放或者删除，在闭包中可以继续使用这个自由变量。因此，简单的说：
+	//函数 + 引用环境 = 闭包
+
+	str := "hello world"
+	foo := func() {
+		str = "hello dude"
+	}
+	foo()
+	fmt.Println("str value: ", str)
+	fmt.Println("----------")
+
+	//测试
+	// 创建一个累加器, 初始值为1
+	accumulator := Accumulate(1)
+
+	// 累加1并打印
+	fmt.Println(accumulator())
+
+	fmt.Println(accumulator())
+
+	// 打印累加器的函数地址
+	fmt.Printf("%p\n", accumulator)
+
+	// 创建一个累加器, 初始值为1
+	accumulator2 := Accumulate(10)
+
+	// 累加1并打印
+	fmt.Println(accumulator2())
+
+	// 打印累加器的函数地址
+	fmt.Printf("%p\n", accumulator2)
+}
+
+//闭包的记忆效应
+func Accumulate(value int) func() int {
+	return func() int {
+		value++
+		return value
+	}
+
 }
 
 //实现接口

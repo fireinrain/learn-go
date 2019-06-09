@@ -166,6 +166,16 @@ func ContainerCakes() {
 		"D": "right",
 		"S": "backward",
 	}
+
+	//不限制值类型 interface{} 表示任意类型
+	maps := make(map[string]interface{})
+	maps["name"] = "xiaoqian"
+	maps["age"] = 12
+	maps["height"] = 167.3
+
+	fmt.Printf("%+v", maps)
+	fmt.Println()
+
 	fmt.Println(m)
 
 	//遍历map
