@@ -92,6 +92,18 @@ func StructsPlay() {
 	cat := NewBlackCat("yellow")
 	fmt.Println(cat.Color)
 
+	//方法 与接收器
+	bag := &Bag{}
+	Insert(bag, 2)
+
+}
+func Insert(bag *Bag, item int) {
+	ints := append(bag.item, item)
+	fmt.Println(ints)
+}
+
+type Bag struct {
+	item []int
 }
 
 //模拟父级构造函数
