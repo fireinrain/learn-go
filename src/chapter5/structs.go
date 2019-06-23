@@ -3,6 +3,7 @@ package chapter5
 import "fmt"
 
 func StructsPlay() {
+
 	//结构体
 	//结构体的定义只是一种内存布局的描述，只有当结构体实例化时，才会真正地分配内存
 
@@ -63,7 +64,8 @@ func StructsPlay() {
 	fmt.Println(ins)
 
 	// 实例化一个匿名结构体
-	msg := &struct { // 定义部分
+	msg := &struct {
+		// 定义部分
 		id   int
 		data string
 	}{ // 值初始化部分
@@ -94,10 +96,44 @@ func StructsPlay() {
 
 	//方法 与接收器
 	bag := &Bag{}
-	Insert(bag, 2)
+	fmt.Println(*bag)
+	fmt.Println(bag)
+	Insert(*bag, 2)
+
+	fmt.Printf("----------")
+	fmt.Println()
+
+	//指针类型的接收器
+	property := &Property{}
+	property.SetValue(1)
+	fmt.Println(property.value)
+	//在计算机中，小对象由于值复制时的速度较快，所以适合使用非指针接收器。
+	// 大对象因为复制性能较低，适合使用指针接收器，在接收器和参数间传递时不进行复制，只是传递指针。
+
+	//Go 语言可以对任何类型添加方法。给一种类型添加方法就像给结构体添加方法一样，因为结构体也是一种类型。
+
+	var myint myInt = 12
+	fmt.Println(myint.Is0())
 
 }
-func Insert(bag *Bag, item int) {
+
+type myInt int
+
+func (i myInt) Is0() bool {
+	return i == 0
+}
+func (p *Property) Value() int {
+	return p.value
+}
+func (p *Property) SetValue(value int) {
+	p.value = value
+}
+
+type Property struct {
+	value int
+}
+
+func Insert(bag Bag, item int) {
 	ints := append(bag.item, item)
 	fmt.Println(ints)
 }
