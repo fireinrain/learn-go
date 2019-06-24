@@ -115,6 +115,30 @@ func StructsPlay() {
 	var myint myInt = 12
 	fmt.Println(myint.Is0())
 
+	fmt.Println("---------")
+	//方法与函数的统一调用
+
+	var delegate func(int)
+	c := &class{}
+	delegate = c.Do
+	delegate(100)
+	delegate = Do
+	delegate(120)
+
+}
+
+//定义结构体
+type class struct {
+}
+
+//给结构体添加DO方法
+func (c *class) Do(v int) {
+	fmt.Println("call method do: ", v)
+}
+
+//普通函数
+func Do(v int) {
+	fmt.Println("call func do: ", v)
 }
 
 type myInt int
