@@ -118,12 +118,20 @@ func StructsPlay() {
 	fmt.Println("---------")
 	//方法与函数的统一调用
 
+	//声明一个函数回调
 	var delegate func(int)
+	//创建结构体实例
 	c := &class{}
+	//将回调设置为c的Do方法
 	delegate = c.Do
+	//调用
 	delegate(100)
+	//将回调设置为普通函数
 	delegate = Do
+	//调用
 	delegate(120)
+	//无论是普通函数还是结构体的方法，
+	// 只要它们的签名一致，与它们签名一致的函数变量就可以保存普通函数或是结构体方法
 
 }
 
