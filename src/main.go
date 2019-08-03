@@ -1,6 +1,6 @@
 package main
 
-import "chapter5"
+import "chapter6"
 
 func main() {
 	//chapter1.BasicGrammar()
@@ -10,5 +10,6 @@ func main() {
 	//chapter3.ControlTheProcess()
 	//chapter4.FunctionPlay()
 	//chapter5.StructsPlay()
-	chapter5.CallTheEventBusSystem()
+	//chapter5.CallTheEventBusSystem()
+	chapter6.GetACar()
 }
