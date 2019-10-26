@@ -1,9 +1,14 @@
-package chapter7
+package main
 
 import (
 	"fmt"
 	"github.com/360EntSecGroup-Skylar/excelize"
 )
+
+func main() {
+	PlayWithExcel()
+
+}
 
 //测试excel
 func PlayWithExcel() {
